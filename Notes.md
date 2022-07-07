@@ -2,7 +2,7 @@
 
 ## Using the POC
 
-Once it boots hit A to add the second window. Then refocus to the first window and hit L to draw the one example sprite and start it moving.
+Once it boots move the first window to one side - the second one will cover it otherwise. Hit A to add the second window. Then refocus to the first window and hit L to draw the one example sprite and start it moving.
 
 ## Probably Architecture
 
