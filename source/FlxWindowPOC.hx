@@ -10,7 +10,7 @@ import openfl.display.StageAlign;
 import openfl.display.StageScaleMode;
 import openfl.events.Event;
 
-class FlxWindow extends Sprite
+class FlxWindowPOC extends Sprite
 {
 	public var _win:lime.ui.Window;
 

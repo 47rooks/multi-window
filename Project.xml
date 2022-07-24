@@ -6,7 +6,8 @@
 
 	<app title="MultiWindow" file="MultiWindow" main="Main" version="0.0.1" company="HaxeFlixel" />
 
-	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
+	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you e
+		mbed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
 	<app preloader="flixel.system.FlxPreloader" />
 
@@ -71,6 +72,11 @@
 
 	<!--Disable the Flixel core focus lost screen-->
 	<!--<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />-->
+
+	<!--Enable multiple windows -->
+    <haxedef name="FLX_MULTI_WINDOW"/>
+	<!-- FlxWindow debugging only - only during dev. For now there is no code using this anymore. -->
+	<!-- <haxedef name="WIN_CAMERA" /> -->
 
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
