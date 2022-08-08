@@ -55,6 +55,7 @@ class PlayState extends FlxState
 		final mainLocY = FlxG.game.stage.window.y;
 
 		_win2 = FlxWindow.createWindow(mainLocX - sideWindowWidth, mainLocY, sideWindowWidth, sideWindowHeight, "win2", false);
+		_win2._camera.bgColor = FlxColor.PINK;
 		_win3 = FlxWindow.createWindow(mainLocX + FlxG.width, mainLocY, Math.floor(sideWindowWidth * 1.5), sideWindowHeight, "win3", false);
 
 		_mainWall = FlxCollision.createCameraWall(FlxG.camera, true, 32);
@@ -87,7 +88,9 @@ class PlayState extends FlxState
 			{
 				return;
 			}
-			FlxG.camera.bgColor = FlxColor.PINK;
+			// Turn off border on main app window. This means you lose access to a close button.
+			// App must therefore provide
+			// FlxG.game.stage.application.window.borderless = true;
 			addTitles();
 			addBlocks();
 		}
@@ -97,6 +100,7 @@ class PlayState extends FlxState
 	{
 		// Add ui cameras to each window
 		_mainUICamera = new FlxCamera(0, 0, 200, 50);
+		_mainUICamera.bgColor = 0x80000000;
 		FlxG.cameras.add(_mainUICamera, false);
 		_win2UICamera = new FlxCamera(0, 0, 200, 50);
 		_win2.addCamera(_win2UICamera, false);
