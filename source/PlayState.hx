@@ -48,6 +48,7 @@ class PlayState extends FlxState
 
 	var _addWindowButton:FlxUIButton;
 	var _addSpritesButton:FlxUIButton;
+	var _delWindowButton:FlxUIButton;
 
 	override public function create()
 	{
@@ -100,11 +101,25 @@ class PlayState extends FlxState
 		_addSpritesButton.setLabelFormat(14, FlxColor.BLACK, FlxTextAlign.CENTER);
 		_addSpritesButton.active = false;
 		add(_addSpritesButton);
+
+		top += pitch;
+
+		_delWindowButton = new FlxUIButton(left, top, "Close a window", () ->
+		{
+			_delWindowButton.active = false;
+			_rbotWin.destroy();
+			_rbotWin = null;
+		});
+		_delWindowButton.resize(150, 30);
+		_delWindowButton.setLabelFormat(14, FlxColor.BLACK, FlxTextAlign.CENTER);
+		_delWindowButton.active = false;
+		add(_delWindowButton);
 	}
 
 	private function enableOtherButtons():Void
 	{
 		_addSpritesButton.active = true;
+		_delWindowButton.active = true;
 	}
 
 	private function setupWindows():Void
@@ -114,19 +129,20 @@ class PlayState extends FlxState
 		FlxG.game.stage.window.y = TOP_LEFT_Y;
 
 		_rtopWin = FlxWindow.createWindow(TOP_LEFT_X + LEFT_W_WIDTH, TOP_LEFT_Y, RTOP_W_WIDTH, RTOP_W_HEIGHT, "rtop", false);
-		_rtopWin._camera.bgColor = FlxColor.PINK;
+		_rtopWin.camera.bgColor = FlxColor.PINK;
 		_mbotWin = FlxWindow.createWindow(TOP_LEFT_X + LEFT_W_WIDTH, TOP_LEFT_Y + RBOT_W_HEIGHT, MBOT_W_WIDTH, MBOT_W_HEIGHT, "mbot", false);
-		_mbotWin._camera.bgColor = FlxColor.YELLOW;
+		_mbotWin.camera.bgColor = FlxColor.YELLOW;
 		_rbotWin = FlxWindow.createWindow(TOP_LEFT_X + LEFT_W_WIDTH + MBOT_W_WIDTH, TOP_LEFT_Y + RBOT_W_HEIGHT, RBOT_W_WIDTH, RBOT_W_HEIGHT, "rbot", false);
 
-		_rtopWall = FlxCollision.createCameraWall(_rtopWin._camera, true, 8);
-		_mbotWall = FlxCollision.createCameraWall(_mbotWin._camera, true, 8);
-		_rbotWall = FlxCollision.createCameraWall(_rbotWin._camera, true, 8);
+		_rtopWall = FlxCollision.createCameraWall(_rtopWin.camera, true, 8);
+		_mbotWall = FlxCollision.createCameraWall(_mbotWin.camera, true, 8);
+		_rbotWall = FlxCollision.createCameraWall(_rbotWin.camera, true, 8);
+
 		// expand world bounds so that the camera walls work
 		FlxG.worldBounds.right = 2000;
-		setWallCamera(_rtopWall, _rtopWin._camera);
-		setWallCamera(_mbotWall, _mbotWin._camera);
-		setWallCamera(_rbotWall, _rbotWin._camera);
+		setWallCamera(_rtopWall, _rtopWin.camera);
+		setWallCamera(_mbotWall, _mbotWin.camera);
+		setWallCamera(_rbotWall, _rbotWin.camera);
 
 		add(_rtopWall);
 		add(_mbotWall);
@@ -193,11 +209,11 @@ class PlayState extends FlxState
 		// Add ui cameras to each window
 		_rtopUICamera = new FlxCamera(0, 0, 200, 50);
 		_rtopUICamera.bgColor = 0x80000000; // Semi-transparent black
-		_rtopWin.addCamera(_rtopUICamera);
+		_rtopWin.cameras.add(_rtopUICamera);
 		_mbotUICamera = new FlxCamera(0, 0, 200, 50);
-		_mbotWin.addCamera(_mbotUICamera);
+		_mbotWin.cameras.add(_mbotUICamera);
 		_rbotUICamera = new FlxCamera(0, 0, 200, 50);
-		_rbotWin.addCamera(_rbotUICamera);
+		_rbotWin.cameras.add(_rbotUICamera);
 
 		// Add text names to the UI cameras
 		var fWidth = 200;
@@ -220,18 +236,18 @@ class PlayState extends FlxState
 		// Main window sprites
 		var s = new FlxSprite(100, 100);
 		s.makeGraphic(50, 50, _random.color(FlxColor.BLUE));
-		s.cameras = [_rtopWin._camera, _mbotWin._camera, _rbotWin._camera];
+		s.cameras = [_rtopWin.camera, _mbotWin.camera, _rbotWin.camera];
 		_rtopSprites.add(s);
 
 		// Add a sprite to the second window by specifying the camera to render to
 		s = new FlxSprite(0, 100);
 		s.makeGraphic(50, 50, _random.color(FlxColor.BLUE));
-		s.cameras = [_mbotWin._camera, _rbotWin._camera, _mbotUICamera];
+		s.cameras = [_mbotWin.camera, _rbotWin.camera, _mbotUICamera];
 		_mbotSprites.add(s);
 
 		s = new FlxSprite(0, 0);
 		s.makeGraphic(50, 100, _random.color(FlxColor.BLUE));
-		s.cameras = [_rbotWin._camera];
+		s.cameras = [_rbotWin.camera];
 		_rbotSprites.add(s);
 
 		// Start the sprites moving to show the one game loop controls both
