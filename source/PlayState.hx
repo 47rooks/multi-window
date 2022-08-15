@@ -54,10 +54,6 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		trace('current=${FlxG.stage.getChildAt(0)}');
-		trace('renderblit=${FlxG.renderBlit}');
-		trace('renderTile=${FlxG.renderTile}');
-
 		_rtopSprites = new FlxTypedGroup<FlxSprite>();
 		_mbotSprites = new FlxTypedGroup<FlxSprite>();
 		_rbotSprites = new FlxTypedGroup<FlxSprite>();
@@ -67,7 +63,6 @@ class PlayState extends FlxState
 		addMainMenu();
 	}
 
-	@:access(flixel.FlxWindow.onResize)
 	private function addMainMenu():Void
 	{
 		var fWidth = 200;
@@ -83,7 +78,7 @@ class PlayState extends FlxState
 		{
 			_addWindowButton.active = false;
 			setupWindows();
-			enableOtherButtons();
+			_addSpritesButton.active = true;
 		});
 		_addWindowButton.resize(150, 30);
 		_addWindowButton.setLabelFormat(14, FlxColor.BLACK, FlxTextAlign.CENTER);
@@ -96,6 +91,7 @@ class PlayState extends FlxState
 			_addSpritesButton.active = false;
 			addTitles();
 			addBlocks();
+			_delWindowButton.active = true;
 		});
 		_addSpritesButton.resize(150, 30);
 		_addSpritesButton.setLabelFormat(14, FlxColor.BLACK, FlxTextAlign.CENTER);
@@ -114,12 +110,6 @@ class PlayState extends FlxState
 		_delWindowButton.setLabelFormat(14, FlxColor.BLACK, FlxTextAlign.CENTER);
 		_delWindowButton.active = false;
 		add(_delWindowButton);
-	}
-
-	private function enableOtherButtons():Void
-	{
-		_addSpritesButton.active = true;
-		_delWindowButton.active = true;
 	}
 
 	private function setupWindows():Void
